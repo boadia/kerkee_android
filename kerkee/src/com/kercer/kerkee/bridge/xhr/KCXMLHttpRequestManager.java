@@ -63,6 +63,7 @@ public class KCXMLHttpRequestManager
             boolean async = getArgBoolean(args, "async", true);
             String href = getArgString(args, "href", null);
             int timeout = getArgInt(args, "timeout", KCRetryPolicyDefault.DEFAULT_TIMEOUT_MS);
+            int retrys = getArgInt(args, "retrys", KCRetryPolicyDefault.DEFAULT_MAX_RETRIES);
 
             KCURI uriUrl = KCURI.parse(url);
             boolean isAbsolute = uriUrl.isAbsolute();
@@ -90,7 +91,7 @@ public class KCXMLHttpRequestManager
 
             }
 
-            xhr.open(webView, method, url, async, ua, referer, cookie, timeout);
+            xhr.open(webView, method, url, async, ua, referer, cookie, timeout,retrys);
         }
         catch (URISyntaxException e)
         {

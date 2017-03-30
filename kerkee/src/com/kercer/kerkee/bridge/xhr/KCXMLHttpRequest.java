@@ -94,10 +94,10 @@ public class KCXMLHttpRequest
      * @param userAgent - User-Agent of the browser(currently WebView)
      * @param referer   - referer of the current request
      */
-    public void open(final KCWebView webView, final String method, final String url, final boolean async, final String userAgent, final String referer, final String cookie, final int timeout)
+    public void open(final KCWebView webView, final String method, final String url, final boolean async, final String userAgent, final String referer, final String cookie, final int timeout,final int retrys)
     {
         mAsync = async;
-        createHttpRequest(webView, method, url, timeout);
+        createHttpRequest(webView, method, url, timeout,retrys);
         if (mHttpRequest != null)
         {
             if (userAgent != null)
@@ -119,7 +119,7 @@ public class KCXMLHttpRequest
      * @param method - currently only supports GET, POST, HEAD
      * @param url
      */
-    private void createHttpRequest(final KCWebView webView, final String method, final String url, final int timeout)
+    private void createHttpRequest(final KCWebView webView, final String method, final String url, final int timeout,final int retrys)
     {
         URI uri = URI.create(KCUtil.replacePlusWithPercent20(url));
         int nMethod = KCHttpRequest.Method.DEPRECATED_GET_OR_POST;
@@ -157,7 +157,7 @@ public class KCXMLHttpRequest
             };
 
             int nTimeOut = timeout > 0 ? timeout : KCRetryPolicyDefault.DEFAULT_TIMEOUT_MS;
-            mHttpRequest.setRetryPolicy(new KCRetryPolicyDefault(nTimeOut, KCRetryPolicyDefault.DEFAULT_MAX_RETRIES, KCRetryPolicyDefault.DEFAULT_BACKOFF_MULT));
+            mHttpRequest.setRetryPolicy(new KCRetryPolicyDefault(nTimeOut,retrys>0?retrys:KCRetryPolicyDefault.DEFAULT_MAX_RETRIES, KCRetryPolicyDefault.DEFAULT_BACKOFF_MULT));
 
             mHttpRequest.setTag(webView);
             mHttpRequest.setListener(new KCHttpListener()
