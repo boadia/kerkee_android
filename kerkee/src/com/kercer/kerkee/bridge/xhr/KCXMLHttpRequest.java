@@ -91,8 +91,9 @@ public class KCXMLHttpRequest
      *
      * @param method    - GET/POST/HEAD
      * @param url       - the url to request
-     * @param userAgent - User-Agent of the browser(currently WebView)
-     * @param referer   - referer of the current request
+     * @param userAgent - User-Agent of the browser(curr
+     * @param referer   - referer of the current requestently WebView)
+     * @param retrys   - http request retry times on request fail
      */
     public void open(final KCWebView webView, final String method, final String url, final boolean async, final String userAgent, final String referer, final String cookie, final int timeout,final int retrys)
     {
